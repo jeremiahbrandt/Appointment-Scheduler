@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">SelfProject</string>
+    <string name="scheduling_app">Scheduling App</string>
+    <string name="login_button_text">Login</string>
+    <string name="register_button_text">Register</string>
+    <string name="login_page_text">Login Page</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="back_button">Back</string>
+    <string name="client_register_page_textView">Client Register Page</string>
+    <string name="username_hint">Username</string>
+    <string name="register_button">Register</string>
+    <string name="pro_login_button_text">Professional</string>
+    <string name="client_button_text">Client</string>
+    <string name="client_login_page_textView">Client Login Page</string>
+    <string name="pro_register_page_textView">Professional Register Page</string>
+    <string name="pro_login_page_textView">Professional Login Page</string>
+    <string name="client_login_page_text">Client Login Page</string>
+    <string name="upcoming_appointments">Upcoming Appointments</string>
+    <string name="find_professional">Find Professional</string>
+    <string name="find_professional_button">Find Professional</string>
+    <string name="find_user_hint">Enter Professional</string>
+    <string name="client_home_title">Client Home</string>
+    <string name="professional_page_client_view">Professional Page Client View</string>
+    <string name="pro_login_page_text">Professional Login Page</string>
+</resources>

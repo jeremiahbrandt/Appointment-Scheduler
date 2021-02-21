@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/background"
+    tools:context=".ProHomeClientView">
+
+    <TextView
+        android:id="@+id/client_pro_page_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/professional_page_client_view"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:fontFamily="cursive"/>
+
+    <TextView
+        android:id="@+id/pro_client_upcoming_event"
+        android:text="@string/upcoming_appointments"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CalendarView
+            android:id="@+id/pro_home_client_view_calendar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+
+
+</LinearLayout>

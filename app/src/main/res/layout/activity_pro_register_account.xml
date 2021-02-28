@@ -42,7 +42,7 @@
             android:paddingBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="Username" />
+            android:autofillHints="no" />
 
         <EditText
             android:id="@+id/pro_email_ra"

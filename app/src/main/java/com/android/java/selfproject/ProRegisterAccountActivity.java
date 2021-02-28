@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,19 +29,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import util.BookingApi;
+
 public class ProRegisterAccountActivity extends AppCompatActivity {
 
-    private Button registerButton;
-    private Button prevPageButton;
     private EditText email;
     private EditText password;
     private EditText username;
     private ProgressBar progressBar;
 
+    private FirebaseUser currentUser;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private FirebaseUser currentUser;
 
+    // Check Cloud Firestore for user data
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference collectionReference = db.collection("Professionals");
 
@@ -51,24 +53,27 @@ public class ProRegisterAccountActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        registerButton = findViewById(R.id.pro_register_button_ra);
-        prevPageButton = findViewById(R.id.back_button_ra);
+        Button registerButton = findViewById(R.id.pro_register_button_ra);
+        Button prevPageButton = findViewById(R.id.pro_back_button_ra);
         email = findViewById(R.id.pro_email_ra);
         password = findViewById(R.id.pro_password_ra);
         username = findViewById(R.id.pro_username_ra);
         progressBar = findViewById(R.id.pro_register_progressBar);
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                currentUser = firebaseAuth.getCurrentUser();
+        authStateListener = (FirebaseAuth.AuthStateListener) (firebaseAuth) -> {
+            currentUser = firebaseAuth.getCurrentUser();
 
-                if (currentUser != null) {
-                    // user is logged in
-                } else {
-                    // no user logged in
-                }
+            if (currentUser != null) {
+                // Being invoked when not supposed to
+                // user is already logged in
+                Toast.makeText(ProRegisterAccountActivity.this, "User logged in", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(ProRegisterAccountActivity.this, ProLoginActivity.class);
+//                startActivity(intent);
+            }else {
+                // no user yet
+                Toast.makeText(ProRegisterAccountActivity.this, "Continue to register", Toast.LENGTH_SHORT).show();
             }
+
         };
 
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +94,11 @@ public class ProRegisterAccountActivity extends AppCompatActivity {
                 }
             }
         });
+
+        prevPageButton.setOnClickListener((v) -> {
+            startActivity(new Intent(ProRegisterAccountActivity.this, ProLoginActivity.class));
+            finish();
+        });
     }
 
     private void createUserEmailAccount(String email, String password, String username) {
@@ -104,29 +114,43 @@ public class ProRegisterAccountActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Take user to their home page
-                                currentUser = firebaseAuth.getCurrentUser();
+                                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                                assert currentUser != null;
                                 String currentUserId = currentUser.getUid();
 
                                 // Map user
-                                Map<String, String> userObject = new HashMap<>();
-                                userObject.put("userId", currentUserId);
-                                userObject.put("username", username);
+                                Map<String, String> userObj = new HashMap<>();
+                                userObj.put("userId", currentUserId);
+                                userObj.put("username", username);
+                                userObj.put("email", email);
+                                userObj.put("password", password);
 
-                                // Save User to Firebase database
-                                collectionReference.add(userObject).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                // Save User to Firestore database
+                                collectionReference.add(userObj)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
-                                        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        documentReference.get()
+                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                 if (task.getResult().exists()) {
                                                     progressBar.setVisibility(View.INVISIBLE);
-                                                    String name = task.getResult().getString("username");
+                                                    String name = task.getResult()
+                                                            .getString("username");
 
-                                                    Intent intent = new Intent(ProRegisterAccountActivity.this, ProLoginActivity.class);
+                                                    BookingApi bookingApi = BookingApi.getInstance();
+                                                    bookingApi.setUserId(currentUserId);
+                                                    bookingApi.setUsername(name);
+
+                                                    Intent intent = new Intent(ProRegisterAccountActivity.this,
+                                                            ProLoginActivity.class);
                                                     intent.putExtra("username", name);
                                                     intent.putExtra("userId", currentUserId);
                                                     startActivity(intent);
+                                                    
+                                                }else {
+                                                    progressBar.setVisibility(View.INVISIBLE);
                                                 }
                                             }
                                         });
@@ -135,23 +159,25 @@ public class ProRegisterAccountActivity extends AppCompatActivity {
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-
+                                                Toast.makeText(ProRegisterAccountActivity.this, "Failed to make account",
+                                                        Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
                             } else {
                                 // Something went wrong
+                                Toast.makeText(ProRegisterAccountActivity.this, "Failed to make account",
+                                        Toast.LENGTH_SHORT).show();
                             }
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-
+                            Toast.makeText(ProRegisterAccountActivity.this, "Failed to make account",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     });
-        } else {
-
         }
     }
 

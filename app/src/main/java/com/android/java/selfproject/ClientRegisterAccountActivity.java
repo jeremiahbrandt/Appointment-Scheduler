@@ -64,8 +64,10 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
 
                 if(currentUser != null) {
                     // User is already logged in
+                    Toast.makeText(ClientRegisterAccountActivity.this, "User Logged in", Toast.LENGTH_SHORT).show();
                 }else {
                     // User is not logged in yet
+                    Toast.makeText(ClientRegisterAccountActivity.this, "Log in", Toast.LENGTH_SHORT).show();
                 }
             }
         };

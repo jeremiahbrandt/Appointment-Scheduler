@@ -31,10 +31,6 @@ import util.BookingApi;
 
 public class ProLoginActivity extends AppCompatActivity {
 
-    private Button proLogin;
-    private Button prevPage;
-    private Button registerAcct;
-
     private EditText email;
     private EditText password;
 
@@ -44,8 +40,8 @@ public class ProLoginActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference collectionReference = db.collection("Professionals");
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference collectionReference = db.collection("Professionals");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +53,9 @@ public class ProLoginActivity extends AppCompatActivity {
 
         email = findViewById(R.id.pro_email);
         password = findViewById(R.id.pro_password);
-        proLogin = findViewById(R.id.pro_login_button);
-        prevPage = findViewById(R.id.pro_back_button_la);
-        registerAcct = findViewById(R.id.pro_register);
+        Button proLogin = findViewById(R.id.pro_login_button);
+        Button prevPage = findViewById(R.id.pro_back_button_la);
+        Button registerAcct = findViewById(R.id.pro_register);
 
         proLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +77,7 @@ public class ProLoginActivity extends AppCompatActivity {
     }
 
     private void loginEmailPasswordUser(String email, String password) {
+
         progressBar.setVisibility(View.VISIBLE);
 
         if (!TextUtils.isEmpty(email)
@@ -111,7 +108,7 @@ public class ProLoginActivity extends AppCompatActivity {
                                                     bookingApi.setUsername(snapshot.getString("username"));
                                                     bookingApi.setUserId(snapshot.getString("userId"));
 
-                                                    //Go to ListActivity
+                                                    //Go to Post Login Activity
                                                     startActivity(new Intent(ProLoginActivity.this,
                                                             ProHome.class));
                                                 }

@@ -8,8 +8,6 @@
     android:background="@drawable/background"
     tools:context=".ClientLoginActivity">
 
-
-
     <ProgressBar
         android:id="@+id/client_login_progressBar"
         style="?android:attr/progressBarStyleLarge"

@@ -32,15 +32,13 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference collectionReference = db.collection("Clients");
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference collectionReference = db.collection("Clients");
 
     private EditText userName;
     private EditText userEmail;
     private EditText userPass;
     private ProgressBar progressBar;
-    private Button registerAccountButton;
-    private Button prevActivityButton;
 
 
     @Override
@@ -50,8 +48,8 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        registerAccountButton = findViewById(R.id.register_button_ra);
-        prevActivityButton = findViewById(R.id.back_button_ra);
+        Button registerAccountButton = findViewById(R.id.register_button_ra);
+        Button prevActivityButton = findViewById(R.id.back_button_ra);
         progressBar = findViewById(R.id.register_progressBar);
         userName = findViewById(R.id.username_ra);
         userEmail = findViewById(R.id.email_ra);
@@ -113,12 +111,15 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
                     if(task.isSuccessful()) {
                         // Take user to their home page
                         currentUser = firebaseAuth.getCurrentUser();
+                        assert currentUser != null;
                         String currentUserId = currentUser.getUid();
 
                         // Map user
                         Map<String, String> userObject = new HashMap<>();
                         userObject.put("userId", currentUserId);
                         userObject.put("username", username);
+                        userObject.put("email", email);
+                        userObject.put("password", password);
 
                         // Save User to Firebase database
                         collectionReference.add(userObject).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -143,23 +144,25 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-
+                                        Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account",
+                                                Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
                     }else {
                         // Something went wrong
+                        Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account",
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-
+                            Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     });
-        }else {
-
         }
     }
 

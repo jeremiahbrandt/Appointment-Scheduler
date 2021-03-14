@@ -36,11 +36,7 @@ import javax.annotation.Nullable;
 import util.BookingApi;
 
 public class ClientLoginActivity extends AppCompatActivity {
-    
-    private Button clientLogin;
-    private Button prevPage;
-    private Button registerAcct;
-    
+
     private EditText email;
     private EditText password;
     
@@ -50,8 +46,8 @@ public class ClientLoginActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
     
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference collectionReference = db.collection("Clients");
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference collectionReference = db.collection("Clients");
     
     
     @Override
@@ -64,9 +60,9 @@ public class ClientLoginActivity extends AppCompatActivity {
         
         email = findViewById(R.id.client_email);
         password = findViewById(R.id.client_password);
-        clientLogin = findViewById(R.id.client_login_button);
-        prevPage = findViewById(R.id.client_back_button_la);
-        registerAcct = findViewById(R.id.client_register);
+        Button clientLogin = findViewById(R.id.client_login_button);
+        Button prevPage = findViewById(R.id.client_back_button_la);
+        Button registerAcct = findViewById(R.id.client_register);
         
         registerAcct.setOnClickListener((v) -> {
             startActivity(new Intent(ClientLoginActivity.this, ClientRegisterAccountActivity.class));
@@ -108,6 +104,7 @@ public class ClientLoginActivity extends AppCompatActivity {
                                                             @Nullable FirebaseFirestoreException e) {
 
                                             if (e != null) {
+                                                return;
                                             }
                                             assert queryDocumentSnapshots != null;
                                             if (!queryDocumentSnapshots.isEmpty()) {

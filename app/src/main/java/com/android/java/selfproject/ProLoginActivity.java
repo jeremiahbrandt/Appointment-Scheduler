@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,7 +32,6 @@ import javax.annotation.Nullable;
 import util.BookingApi;
 
 public class ProLoginActivity extends AppCompatActivity {
-
     private EditText email;
     private EditText password;
 
@@ -77,7 +78,9 @@ public class ProLoginActivity extends AppCompatActivity {
     }
 
     private void loginEmailPasswordUser(String email, String password) {
-
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
         progressBar.setVisibility(View.VISIBLE);
 
         if (!TextUtils.isEmpty(email)
@@ -124,7 +127,6 @@ public class ProLoginActivity extends AppCompatActivity {
 
                         }
                     });
-
 
 
         }else {

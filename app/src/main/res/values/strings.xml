@@ -19,8 +19,16 @@
     <string name="upcoming_appointments">Upcoming Appointments</string>
     <string name="find_professional">Find Professional</string>
     <string name="find_professional_button">Find Professional</string>
-    <string name="find_user_hint">Enter Professional</string>
+    <string name="find_user_hint">Enter Professional Name</string>
     <string name="client_home_title">Client Home</string>
     <string name="professional_page_client_view">Professional Page Client View</string>
     <string name="pro_login_page_text">Professional Login Page</string>
+    <string name="professional_home_page">Professional Home</string>
+    <string name="pro_name">Pro Name</string>
+    <string name="client_name">Client Name</string>
+    <string name="settings_button">Settings</string>
+    <string name="settings_button">Settings</string>
+    <string name="shareable_code">shareable code</string>
+    <string name="favorite_button">favorite button</string>
+    <string name="pro_email">pro email</string>
 </resources>

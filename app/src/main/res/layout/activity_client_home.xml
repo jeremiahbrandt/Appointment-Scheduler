@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,15 +10,32 @@
     tools:context=".ClientHomeActivity">
 
     <TextView
-        android:id="@+id/client_home_title"
-        android:text="@string/client_home_title"
-        android:textSize="30sp"
-        android:fontFamily="cursive"
-        android:textStyle="bold"
-        android:gravity="center"
+        android:id="@+id/shareable_code_ch"
+        android:contentDescription="@string/shareable_code"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="20sp" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/settings_button_ch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="150dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="@color/white"
+        android:layout_gravity="end"
+        android:src="@drawable/baseline_settings_white_18dp"
+        android:contentDescription="@string/settings_button" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-100dp"
+        android:contentDescription="@string/client_name"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="25sp"/>
 
     <TextView
         android:id="@+id/upcoming_appointments"
@@ -30,24 +47,20 @@
         android:text="@string/upcoming_appointments"
         android:textSize="25sp" />
 
-    <RelativeLayout
+
+    <ListView
+        android:id="@+id/client_list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_height="250dp" />
 
-        <CalendarView
-            android:id="@+id/client_home_calendar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
 
     <TextView
         android:id="@+id/find_professional"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
         android:text="@string/find_professional"
+        android:textStyle="bold"
         android:textSize="25sp" />
 
     <EditText
@@ -57,20 +70,14 @@
         android:layout_marginBottom="24dp"
         android:autofillHints="Find Professional"
         android:hint="@string/find_user_hint"
-        android:inputType="text"
-        android:paddingTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/find_pro_button"
-        tools:layout_editor_absoluteX="0dp" />
+        android:inputType="textPersonName"
+        android:paddingTop="10dp" />
 
     <Button
         android:id="@+id/find_pro_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
-        android:text="@string/find_professional_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/client_home_calendar" />
+        android:text="@string/find_professional_button" />
 
 </LinearLayout>

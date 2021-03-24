@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -9,13 +9,25 @@
     android:background="@drawable/background"
     tools:context=".ProHomeClientView">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/favorite_button_phc"
+        android:contentDescription="@string/favorite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="250dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="@color/white"
+        android:layout_gravity="end"
+        android:src="@drawable/baseline_favorite_white_18dp" />
+
     <TextView
         android:id="@+id/client_pro_page_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="@string/professional_page_client_view"
+        android:layout_marginTop="-225dp"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:contentDescription="@string/professional_page_client_view"
         android:fontFamily="cursive"/>
 
     <TextView

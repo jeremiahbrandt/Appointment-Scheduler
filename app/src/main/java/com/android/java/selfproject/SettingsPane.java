@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+
 import android.view.View;
 import android.widget.Button;
 
+
+
 public class SettingsPane extends AppCompatActivity {
 
-    Button internet, volume, nfc;
+    private static final String TAG = "";
+    Button internet, volume, nfc, DeleteUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,8 @@ public class SettingsPane extends AppCompatActivity {
                 startActivity(new Intent(Settings.Panel.ACTION_NFC));
             }
         });
+
+
 
 
     }

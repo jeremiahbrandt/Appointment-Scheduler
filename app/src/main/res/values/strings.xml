@@ -26,7 +26,7 @@
     <string name="professional_home_page">Professional Home</string>
     <string name="pro_name">Pro Name</string>
     <string name="client_name">Client Name</string>
-<!--    <string name="settings_button">SettingsPane</string>-->
+
     <string name="settings_button">SettingsPane</string>
     <string name="shareable_code">shareable code</string>
     <string name="favorite_button">favorite button</string>
@@ -34,4 +34,10 @@
     <string name="internet">Internet</string>
     <string name="volume">Volume</string>
     <string name="nfc">NFC</string>
+    <string name="Delete_Account">DeleteUser</string>
+    <string name="update_password">Update Password</string>
+    <string name="update_phone">Update Phone</string>
+    <string name="update_email">Update Email</string>
+    <string name="update_name">Update Name</string>
+    <string name="update_image">Update Image</string>
 </resources>

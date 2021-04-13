@@ -28,12 +28,12 @@ public class UpdateUser extends AppCompatActivity {
                 etEmail.setText(firebaseUser.email)
             etName.setText(firebaseUser.displayName)
             etPhone.setText(firebaseUser.phoneNumber)
-            Picasso.get().load(firebaseUser.photoUrl).into(ivUserImage)
+//            Picasso.get().load(firebaseUser.photoUrl).into(ivUserImage)
         }
 
-        btnUpdateImage.setOnClickListener {
-            // update the profile image here
-        }
+//        btnUpdateImage.setOnClickListener {
+//            // update the profile image here
+//        }
 
         btnUpdateName.setOnClickListener {
             // update the name here

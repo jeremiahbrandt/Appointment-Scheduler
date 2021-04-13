@@ -44,12 +44,12 @@ public class ProHome extends AppCompatActivity {
         shareableCode = findViewById(R.id.shareable_code_ph);
 
 //        Settings Button initialization
-//        FloatingActionButton settings = findViewById(R.id.settings_button_ph);
+        FloatingActionButton settings = findViewById(R.id.settings_button_ph);
 
-//        settings.setOnClickListener((v) -> {
-//            startActivity(new Intent(ProHome.this, SettingsActivity.class));
-//            finish();
-//        });
+        settings.setOnClickListener((v) -> {
+            startActivity(new Intent(ProHome.this, SettingsPane.class));
+            finish();
+        });
 
 
         updateProfessional();

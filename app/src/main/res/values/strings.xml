@@ -26,9 +26,12 @@
     <string name="professional_home_page">Professional Home</string>
     <string name="pro_name">Pro Name</string>
     <string name="client_name">Client Name</string>
-    <string name="settings_button">Settings</string>
-    <string name="settings_button">Settings</string>
+<!--    <string name="settings_button">SettingsPane</string>-->
+    <string name="settings_button">SettingsPane</string>
     <string name="shareable_code">shareable code</string>
     <string name="favorite_button">favorite button</string>
     <string name="pro_email">pro email</string>
+    <string name="internet">Internet</string>
+    <string name="volume">Volume</string>
+    <string name="nfc">NFC</string>
 </resources>

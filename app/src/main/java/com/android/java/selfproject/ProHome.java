@@ -1,9 +1,7 @@
 package com.android.java.selfproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,8 +17,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 import Models.Professional;
@@ -50,7 +46,6 @@ public class ProHome extends AppCompatActivity {
             startActivity(new Intent(ProHome.this, SettingsPane.class));
             finish();
         });
-
 
         updateProfessional();
     }

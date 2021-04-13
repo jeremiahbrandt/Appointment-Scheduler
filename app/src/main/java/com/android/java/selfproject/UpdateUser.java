@@ -10,6 +10,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -17,39 +18,54 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class UpdateUser extends AppCompatActivity {
+    Button btnUpdateName, btnUpdateEmail, btnUpdatePhone, btnUpdatePwd;
+    EditText etName, etEmail, etPhone, etPwd;
 
     @Override
-    UpdateUser(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_update_user);
 
-        FirebaseAuth.getInstance().currentUser?.let { firebaseUser ->
-                // if the user is logged in, display their info on the screen
-                etEmail.setText(firebaseUser.email)
-            etName.setText(firebaseUser.displayName)
-            etPhone.setText(firebaseUser.phoneNumber)
-//            Picasso.get().load(firebaseUser.photoUrl).into(ivUserImage)
-        }
+        btnUpdateName = findViewById(R.id.btnUpdateName);
+        btnUpdateEmail = findViewById(R.id.btnUpdateEmail);
+        btnUpdatePhone = findViewById(R.id.btnUpdatePhone);
+        btnUpdatePwd = findViewById(R.id.btnUpdatePwd);
 
-//        btnUpdateImage.setOnClickListener {
-//            // update the profile image here
-//        }
+        etName = findViewById(R.id.etName);
+        etEmail = findViewById(R.id.etEmail);
+        etPhone = findViewById(R.id.etPhone);
+        btnUpdatePwd = findViewById(R.id.btnUpdatePwd);
 
-        btnUpdateName.setOnClickListener {
-            // update the name here
-        }
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        findViewById(R.id.etEmail);
 
-        btnUpdateEmail.setOnClickListener {
-            // update the email here
-        }
+        btnUpdateName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Implement
+            }
+        });
 
-        btnUpdatePhone.setOnClickListener {
-            // update the phone number here
-        }
+        btnUpdateEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Implement
+            }
+        });
 
-        btnUpdatePwd.setOnClickListener {
-            // update the password here
-        }
+        btnUpdatePhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Implement
+            }
+        });
+
+        btnUpdatePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Implement
+            }
+        });
 
     }
 

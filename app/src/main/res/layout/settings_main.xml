@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     android:gravity="center"
     tools:context=".SettingsPane">
 
@@ -15,21 +16,24 @@
         android:id="@+id/internetButton"
         android:text="@string/internet"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"/>
 
     <Button
         android:textAllCaps="false"
         android:id="@+id/volumeButton"
         android:text="@string/volume"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"/>
 
     <Button
         android:textAllCaps="false"
         android:id="@+id/nfcButton"
         android:text="@string/nfc"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"/>
 
 
 

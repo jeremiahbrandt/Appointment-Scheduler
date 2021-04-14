@@ -5,66 +5,75 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background"
         android:orientation="vertical"
         android:gravity="center"
         tools:context=".UpdateUser">
 
         <EditText
             android:id="@+id/etName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
-            android:inputType="textNoSuggestions" />
+            android:hint="@string/name_update_user"
+            android:inputType="textPersonName"
+            android:autofillHints="Name" />
 
         <Button
             android:id="@+id/btnUpdateName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/update_name" />
+            android:text="@string/update_name"
+            android:backgroundTint="@color/black"/>
 
         <EditText
             android:id="@+id/etEmail"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:hint="@string/email_update_user"
+            android:inputType="textEmailAddress"
+            android:autofillHints="Email" />
 
         <Button
             android:id="@+id/btnUpdateEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Name"
+            android:hint="@string/email_update_user"
             android:layout_gravity="center"
-            android:text="@string/update_email" />
+            android:text="@string/update_email"
+            android:backgroundTint="@color/black"/>
 
         <EditText
             android:id="@+id/etPhone"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone"
-            android:inputType="phone" />
+            android:hint="@string/phone_update_user"
+            android:inputType="phone"
+            android:autofillHints="Phone" />
 
         <Button
             android:id="@+id/btnUpdatePhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/update_phone" />
+            android:text="@string/update_phone"
+            android:backgroundTint="@color/black"/>
 
         <EditText
             android:id="@+id/etPassword"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword" />
+            android:hint="@string/password_update_user"
+            android:inputType="textPassword"
+            android:autofillHints="Password" />
 
         <Button
             android:id="@+id/btnUpdatePwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/update_password" />
+            android:text="@string/update_password"
+            android:backgroundTint="@color/black"/>
 
 
 </LinearLayout>

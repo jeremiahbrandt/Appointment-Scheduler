@@ -9,14 +9,6 @@
     android:background="@drawable/background"
     tools:context=".ClientHomeActivity">
 
-    <TextView
-        android:id="@+id/shareable_code_ch"
-        android:contentDescription="@string/shareable_code"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:textSize="20sp" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/settings_button_ch"
         android:layout_width="wrap_content"
@@ -58,6 +50,7 @@
         android:id="@+id/find_professional"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:paddingTop="10dp"
         android:text="@string/find_professional"
         android:textStyle="bold"
@@ -68,10 +61,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:autofillHints="Find Professional"
         android:hint="@string/find_user_hint"
         android:inputType="textPersonName"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"
+        android:autofillHints="Find Professional"/>
 
     <Button
         android:id="@+id/find_pro_button"

@@ -20,7 +20,7 @@ public class SettingsPane extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.settings_main);
 
         internet= findViewById(R.id.internetButton);
         volume = findViewById(R.id.volumeButton);

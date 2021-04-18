@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,6 +58,11 @@ public class ProHome extends AppCompatActivity {
             finish();
         });
 
+        findViewById(R.id.pro_updateAccount_button).setOnClickListener(v -> {
+            startActivity(new Intent(ProHome.this, ProSettingsPage.class));
+            finish();
+        });
+
         updateProfessional();
     }
 
@@ -70,7 +76,7 @@ public class ProHome extends AppCompatActivity {
         });
     }
 
-    public class ApiRequest extends AsyncTask<String, Void, String> {
+    private class ApiRequest extends AsyncTask<String, Void, String> {
         public static final String REQUEST_METHOD = "GET";
         public static final int READ_TIMEOUT = 15000;
         public static final int CONNECTION_TIMEOUT = 15000;

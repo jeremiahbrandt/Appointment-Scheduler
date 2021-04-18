@@ -49,9 +49,5 @@ public class SettingsPane extends AppCompatActivity {
                 startActivity(new Intent(Settings.Panel.ACTION_NFC));
             }
         });
-
-
-
-
     }
 }

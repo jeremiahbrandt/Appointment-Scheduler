@@ -41,4 +41,6 @@
     <string name="password_update_user">Password</string>
     <string name="update_phone">Update Phone Number</string>
     <string name="phone_update_user">Phone</string>
+    <string name="update_button">Update</string>
+    <string name="save_button">Save</string>
 </resources>

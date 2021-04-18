@@ -47,4 +47,13 @@
         android:layout_width="wrap_content"
         android:layout_height="400dp" />
 
+    <Button
+        android:id="@+id/pro_updateAccount_button"
+        android:text="@string/update_button"
+        android:backgroundTint="@color/black"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

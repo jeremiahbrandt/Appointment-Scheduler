@@ -80,7 +80,6 @@ public class ClientLoginActivity extends AppCompatActivity {
                     }
                     assert queryDocumentSnapshots != null;
                     if (!queryDocumentSnapshots.isEmpty()) {
-
                         progressBar.setVisibility(View.INVISIBLE);
                         for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                             BookingApi bookingApi = BookingApi.getInstance();

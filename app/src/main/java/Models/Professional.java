@@ -81,7 +81,6 @@ public class Professional {
         return shareableCode;
     }
 
-
     public Appointment[] getAppointments() {
         return appointments;
     }

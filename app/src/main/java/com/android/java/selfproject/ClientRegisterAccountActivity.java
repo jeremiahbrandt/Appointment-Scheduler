@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,11 +24,21 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import util.ApiEndpointProvider;
+
 public class ClientRegisterAccountActivity extends AppCompatActivity {
+    private String token;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -104,56 +115,58 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
 
             progressBar.setVisibility(View.VISIBLE);
 
-            firebaseAuth.createUserWithEmailAndPassword(email,password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()) {
-                        // Take user to their home page
-                        currentUser = firebaseAuth.getCurrentUser();
-                        assert currentUser != null;
-                        String currentUserId = currentUser.getUid();
+            firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    // Take user to their home page
+                    currentUser = firebaseAuth.getCurrentUser();
+                    assert currentUser != null;
+                    String currentUserId = currentUser.getUid();
 
-                        // Map user
-                        Map<String, String> userObject = new HashMap<>();
-                        userObject.put("userId", currentUserId);
-                        userObject.put("username", username);
-                        userObject.put("email", email);
-                        userObject.put("password", password);
+                    FirebaseAuth.getInstance().getAccessToken(true).addOnCompleteListener(registerTask -> {
+                        token = registerTask.getResult().getToken();
+                        // Call our api
+                        new ApiRequest().execute();
+                    });
 
-                        // Save User to Firebase database
-                        collectionReference.add(userObject).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        if(task.getResult().exists()) {
-                                            progressBar.setVisibility(View.INVISIBLE);
-                                            String name = task.getResult().getString("username");
+                    // Map user
+                    Map<String, String> userObject = new HashMap<>();
+                    userObject.put("userId", currentUserId);
+                    userObject.put("username", username);
+                    userObject.put("email", email);
+                    userObject.put("password", password);
 
-                                            Intent intent = new Intent(ClientRegisterAccountActivity.this, ClientLoginActivity.class);
-                                            intent.putExtra("username", name);
-                                            intent.putExtra("userId", currentUserId);
-                                            startActivity(intent);
-                                        }
+                    // Save User to Firebase database
+                    collectionReference.add(userObject).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if(task.getResult().exists()) {
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        String name = task.getResult().getString("username");
+
+                                        Intent intent = new Intent(ClientRegisterAccountActivity.this, ClientLoginActivity.class);
+                                        intent.putExtra("username", name);
+                                        intent.putExtra("userId", currentUserId);
+                                        startActivity(intent);
                                     }
-                                });
-                            }
-                        })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                }
+                            });
+                        }
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
-                    }else {
-                        // Something went wrong
-                        Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                }else {
+                    // Something went wrong
+                    Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account",
+                            Toast.LENGTH_SHORT).show();
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {
@@ -172,5 +185,71 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
 
         currentUser = firebaseAuth.getCurrentUser();
         firebaseAuth.addAuthStateListener(authStateListener);
+    }
+
+    public class ApiRequest extends AsyncTask<String, Void, String> {
+        public static final String REQUEST_METHOD = "POST";
+        public static final int READ_TIMEOUT = 15000;
+        public static final int CONNECTION_TIMEOUT = 15000;
+
+        @Override
+        public String doInBackground(String... params){
+            String result = "";
+
+            String endpoint ="/client/register";
+            String inputLine;
+            try {
+                String url = ApiEndpointProvider.url;
+
+                HttpURLConnection connection = (HttpURLConnection) new URL(url + endpoint).openConnection();
+
+                connection.setRequestMethod(REQUEST_METHOD);
+                connection.setReadTimeout(READ_TIMEOUT);
+                connection.setConnectTimeout(CONNECTION_TIMEOUT);
+
+                connection.setRequestProperty("Authorization", "Bearer " + token);
+                connection.setRequestProperty("Content-Type", "application/json; utf-8");
+                connection.setRequestProperty("Accept", "application/json");
+
+                RegistrationRequestBody body = new RegistrationRequestBody();
+                String jsonInput = new Gson().toJson(body);
+                try(OutputStream os = connection.getOutputStream()) {
+                    byte[] input = jsonInput.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+
+                connection.connect();
+
+                InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while((inputLine = reader.readLine()) != null){
+                    stringBuilder.append(inputLine);
+                }
+
+                //Close our InputStream and Buffered reader
+                reader.close();
+                streamReader.close();
+
+                //Set our result equal to our stringBuilder
+                result += stringBuilder.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+    }
+
+    // TODO: Set these values
+    class RegistrationRequestBody {
+        String FirstName;
+        String LastName;
+
+        public RegistrationRequestBody() {
+            this.FirstName = "Default_FirstName";
+            this.LastName = "Default_LastName";
+        }
     }
 }

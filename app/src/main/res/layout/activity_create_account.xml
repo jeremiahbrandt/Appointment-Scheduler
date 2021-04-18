@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
     android:orientation="vertical"
@@ -54,6 +53,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="Email"/>
+
+        <EditText
+            android:id="@+id/firstName_ra"
+            android:hint="First Name"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="First Name"/>
+
+        <EditText
+            android:id="@+id/lastName_ra"
+            android:hint="Last Name"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Last Name"/>
 
         <EditText
             android:id="@+id/password_ra"

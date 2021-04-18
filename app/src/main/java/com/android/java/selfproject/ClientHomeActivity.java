@@ -32,34 +32,24 @@ public class ClientHomeActivity extends AppCompatActivity {
 
     EditText findProName;
 
-    private TextView firstName;
-    private TextView lastName;
+    private TextView name;
     private ListView upcomingAppointments;
 
     private ArrayAdapter<String> arrayAdapter;
     private List<String> appointmentsList;
-
-//  Appointments added here
-    String[] mobileList = {};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_home);
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_client_home, mobileList);
-
-        ListView listView = (ListView) findViewById(R.id.client_list_view);
-        listView.setAdapter(adapter);
-
         Button findPro = findViewById(R.id.find_pro_button);
         findProName = findViewById(R.id.find_pro_EditText);
-        firstName = findViewById(R.id.firstName);
-        lastName= findViewById(R.id.lastName);
+        name = findViewById(R.id.name);
         upcomingAppointments = findViewById(R.id.client_list_view);
 
-        appointmentsList = new ArrayList();
-        arrayAdapter = new ArrayAdapter(this, R.layout.activity_listview, appointmentsList);
+        appointmentsList = new ArrayList<>();
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.activity_listview, appointmentsList);
         upcomingAppointments.setAdapter(arrayAdapter);
 
         findPro.setOnClickListener((v) -> {
@@ -130,8 +120,7 @@ public class ClientHomeActivity extends AppCompatActivity {
                 Client client = new Client(new JSONObject(s));
 
                 // Set UI values
-                firstName.setText(client.getFirstName());
-                lastName.setText(client.getLastName());
+                name.setText(client.getFirstName() + " " + client.getLastName());
                 appointmentsList.addAll(client.getAppointmentsStringList());
                 arrayAdapter.notifyDataSetChanged();
             } catch (JSONException e) {

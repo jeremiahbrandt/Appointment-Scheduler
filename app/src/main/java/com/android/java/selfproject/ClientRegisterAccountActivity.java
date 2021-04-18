@@ -32,6 +32,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,9 +49,10 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
 
     private EditText userName;
     private EditText userEmail;
+    private EditText userFirstName;
+    private EditText userLastName;
     private EditText userPass;
     private ProgressBar progressBar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,54 +66,44 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.register_progressBar);
         userName = findViewById(R.id.username_ra);
         userEmail = findViewById(R.id.email_ra);
+        userFirstName = findViewById(R.id.firstName_ra);
+        userLastName = findViewById(R.id.lastName_ra);
         userPass = findViewById(R.id.password_ra);
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                currentUser = firebaseAuth.getCurrentUser();
+        authStateListener = firebaseAuth -> {
+            currentUser = firebaseAuth.getCurrentUser();
 
-                if(currentUser != null) {
-                    // User is already logged in
-                    Toast.makeText(ClientRegisterAccountActivity.this, "User Logged in", Toast.LENGTH_SHORT).show();
-                }else {
-                    // User is not logged in yet
-                    Toast.makeText(ClientRegisterAccountActivity.this, "Log in", Toast.LENGTH_SHORT).show();
-                }
+            if(currentUser != null) {
+                // User is already logged in
+                Toast.makeText(ClientRegisterAccountActivity.this, "User Logged in", Toast.LENGTH_SHORT).show();
+            }else {
+                // User is not logged in yet
+                Toast.makeText(ClientRegisterAccountActivity.this, "Log in", Toast.LENGTH_SHORT).show();
             }
         };
 
-        prevActivityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent prevPageIntent = new Intent(ClientRegisterAccountActivity.this, ClientLoginActivity.class);
-                startActivity(prevPageIntent);
-            }
+        prevActivityButton.setOnClickListener(v -> {
+            Intent prevPageIntent = new Intent(ClientRegisterAccountActivity.this, ClientLoginActivity.class);
+            startActivity(prevPageIntent);
         });
 
-        registerAccountButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        registerAccountButton.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(userEmail.getText().toString()) && !TextUtils.isEmpty(userPass.getText().toString()) && !TextUtils.isEmpty(userName.getText().toString())) {
+                String email = userEmail.getText().toString().trim();
+                String password = userPass.getText().toString().trim();
+                String username = userName.getText().toString().trim();
+                String firstName = userFirstName.getText().toString();
+                String lastName = userLastName.getText().toString();
 
-                if (!TextUtils.isEmpty(userEmail.getText().toString())
-                    && !TextUtils.isEmpty(userPass.getText().toString())
-                    && !TextUtils.isEmpty(userName.getText().toString())) {
-
-                    String email = userEmail.getText().toString().trim();
-                    String password = userPass.getText().toString().trim();
-                    String username = userName.getText().toString().trim();
-                    createUserEmailAccount(email, password, username);
-
-                }else {
-                    Toast.makeText(ClientRegisterAccountActivity.this, "Empty Fields Not Allowed", Toast.LENGTH_LONG).show();
-                }
+                createUserEmailAccount(email, password, username, firstName, lastName);
+            }else {
+                Toast.makeText(ClientRegisterAccountActivity.this, "Empty Fields Not Allowed", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private void createUserEmailAccount(String email, String password, String username) {
-        if(!TextUtils.isEmpty(email)
-            && !TextUtils.isEmpty(password)
-            && !TextUtils.isEmpty(username)) {
+    private void createUserEmailAccount(String email, String password, String username, String firstName, String lastName) {
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)  && !TextUtils.isEmpty(firstName)  && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(username)) {
 
             progressBar.setVisibility(View.VISIBLE);
 
@@ -125,7 +117,7 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
                     FirebaseAuth.getInstance().getAccessToken(true).addOnCompleteListener(registerTask -> {
                         token = registerTask.getResult().getToken();
                         // Call our api
-                        new ApiRequest().execute();
+                        new ApiRequest().execute(firstName, lastName);
                     });
 
                     // Map user
@@ -136,46 +128,23 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
                     userObject.put("password", password);
 
                     // Save User to Firebase database
-                    collectionReference.add(userObject).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if(task.getResult().exists()) {
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        String name = task.getResult().getString("username");
+                    collectionReference.add(userObject).addOnSuccessListener(documentReference -> documentReference.get().addOnCompleteListener(task1 -> {
+                        if(task1.getResult().exists()) {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            String name = task1.getResult().getString("username");
 
-                                        Intent intent = new Intent(ClientRegisterAccountActivity.this, ClientLoginActivity.class);
-                                        intent.putExtra("username", name);
-                                        intent.putExtra("userId", currentUserId);
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
+                            Intent intent = new Intent(ClientRegisterAccountActivity.this, ClientLoginActivity.class);
+                            intent.putExtra("username", name);
+                            intent.putExtra("userId", currentUserId);
+                            startActivity(intent);
                         }
-                    })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                    })).addOnFailureListener(e -> Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account", Toast.LENGTH_SHORT).show());
 
                 }else {
                     // Something went wrong
-                    Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account", Toast.LENGTH_SHORT).show();
                 }
-            })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            }).addOnFailureListener(e -> Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account", Toast.LENGTH_SHORT).show());
         }
     }
 
@@ -187,7 +156,7 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
         firebaseAuth.addAuthStateListener(authStateListener);
     }
 
-    public class ApiRequest extends AsyncTask<String, Void, String> {
+    private class ApiRequest extends AsyncTask<String, Void, String> {
         public static final String REQUEST_METHOD = "POST";
         public static final int READ_TIMEOUT = 15000;
         public static final int CONNECTION_TIMEOUT = 15000;
@@ -211,10 +180,10 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
                 connection.setRequestProperty("Content-Type", "application/json; utf-8");
                 connection.setRequestProperty("Accept", "application/json");
 
-                RegistrationRequestBody body = new RegistrationRequestBody();
+                RegistrationRequestBody body = new RegistrationRequestBody(params[0], params[1]);
                 String jsonInput = new Gson().toJson(body);
                 try(OutputStream os = connection.getOutputStream()) {
-                    byte[] input = jsonInput.getBytes("utf-8");
+                    byte[] input = jsonInput.getBytes(StandardCharsets.UTF_8);
                     os.write(input, 0, input.length);
                 }
 
@@ -242,14 +211,13 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
         }
     }
 
-    // TODO: Set these values
-    class RegistrationRequestBody {
-        String FirstName;
-        String LastName;
+    private class RegistrationRequestBody {
+        private String FirstName;
+        private String LastName;
 
-        public RegistrationRequestBody() {
-            this.FirstName = "Default_FirstName";
-            this.LastName = "Default_LastName";
+        protected RegistrationRequestBody(String firstName, String lastName) {
+            this.FirstName = firstName;
+            this.LastName = lastName;
         }
     }
 }

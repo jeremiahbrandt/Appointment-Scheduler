@@ -38,8 +38,6 @@ public class ProLoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
-    private FirebaseUser currentUser;
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference collectionReference = db.collection("Professionals");
@@ -61,8 +59,7 @@ public class ProLoginActivity extends AppCompatActivity {
         proLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginEmailPasswordUser(email.getText().toString().trim(),
-                        password.getText().toString().trim());
+                loginEmailPasswordUser(email.getText().toString().trim(), password.getText().toString().trim());
             }
         });
 
@@ -78,64 +75,45 @@ public class ProLoginActivity extends AppCompatActivity {
     }
 
     private void loginEmailPasswordUser(String email, String password) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build();
-            StrictMode.setThreadPolicy(policy);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         progressBar.setVisibility(View.VISIBLE);
 
-        if (!TextUtils.isEmpty(email)
-                && !TextUtils.isEmpty(password)) {
-            firebaseAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            assert user != null;
-                            final String currentUserId = user.getUid();
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+            firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                assert user != null;
+                final String currentUserId = user.getUid();
 
-                            collectionReference
-                                    .whereEqualTo("userId", currentUserId)
-                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots,
-                                                            @Nullable FirebaseFirestoreException e) {
+                collectionReference.whereEqualTo("userId", currentUserId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
 
-                                            if (e != null) {
-                                            }
-                                            assert queryDocumentSnapshots != null;
-                                            if (!queryDocumentSnapshots.isEmpty()) {
-
-                                                progressBar.setVisibility(View.INVISIBLE);
-                                                for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                                    BookingApi bookingApi = BookingApi.getInstance();
-                                                    bookingApi.setUsername(snapshot.getString("username"));
-                                                    bookingApi.setUserId(snapshot.getString("userId"));
-
-                                                    //Go to Post Login Activity
-                                                    startActivity(new Intent(ProLoginActivity.this,
-                                                            ProHome.class));
-                                                }
-                                            }
-                                        }
-                                    });
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
+                        assert queryDocumentSnapshots != null;
+                        if (!queryDocumentSnapshots.isEmpty()) {
                             progressBar.setVisibility(View.INVISIBLE);
+                            for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                BookingApi bookingApi = BookingApi.getInstance();
+                                bookingApi.setUsername(snapshot.getString("username"));
+                                bookingApi.setUserId(snapshot.getString("userId"));
 
+                                //Go to Post Login Activity
+                                startActivity(new Intent(ProLoginActivity.this, ProHome.class));
+                            }
                         }
-                    });
-
-
-        }else {
-
+                    }
+                });
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            });
+        } else {
             progressBar.setVisibility(View.INVISIBLE);
-            Toast.makeText(ProLoginActivity.this,
-                    "Please enter email and password",
-                    Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(ProLoginActivity.this, "Please enter email and password", Toast.LENGTH_LONG).show();
         }
     }
 }

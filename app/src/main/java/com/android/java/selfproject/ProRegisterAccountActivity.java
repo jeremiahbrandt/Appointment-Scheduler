@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,14 +25,28 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import Models.Professional;
+import io.grpc.internal.JsonUtil;
+import util.ApiEndpointProvider;
 import util.BookingApi;
 
 public class ProRegisterAccountActivity extends AppCompatActivity {
+    private String token;
 
     private EditText email;
     private EditText password;
@@ -102,10 +117,7 @@ public class ProRegisterAccountActivity extends AppCompatActivity {
     }
 
     private void createUserEmailAccount(String email, String password, String username) {
-        if (!TextUtils.isEmpty(email)
-                && !TextUtils.isEmpty(password)
-                && !TextUtils.isEmpty(username)) {
-
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(username)) {
             progressBar.setVisibility(View.VISIBLE);
 
             firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -117,6 +129,12 @@ public class ProRegisterAccountActivity extends AppCompatActivity {
                                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
                                 assert currentUser != null;
                                 String currentUserId = currentUser.getUid();
+
+                                FirebaseAuth.getInstance().getAccessToken(true).addOnCompleteListener(registerInApitask -> {
+                                    token = registerInApitask.getResult().getToken();
+                                    // Call our api
+                                    new ApiRequest().execute();
+                                });
 
                                 // Map user
                                 Map<String, String> userObj = new HashMap<>();
@@ -187,5 +205,83 @@ public class ProRegisterAccountActivity extends AppCompatActivity {
 
         currentUser = firebaseAuth.getCurrentUser();
         firebaseAuth.addAuthStateListener(authStateListener);
+    }
+
+    public class ApiRequest extends AsyncTask<String, Void, String> {
+        public static final String REQUEST_METHOD = "POST";
+        public static final int READ_TIMEOUT = 15000;
+        public static final int CONNECTION_TIMEOUT = 15000;
+
+        @Override
+        public String doInBackground(String... params){
+            String result = "";
+
+            String endpoint ="/professional/register";
+            String inputLine;
+            try {
+                String url = ApiEndpointProvider.url;
+
+                HttpURLConnection connection = (HttpURLConnection) new URL(url + endpoint).openConnection();
+
+                connection.setRequestMethod(REQUEST_METHOD);
+                connection.setReadTimeout(READ_TIMEOUT);
+                connection.setConnectTimeout(CONNECTION_TIMEOUT);
+
+                connection.setRequestProperty("Authorization", "Bearer " + token);
+                connection.setRequestProperty("Content-Type", "application/json; utf-8");
+                connection.setRequestProperty("Accept", "application/json");
+
+                RegistrationRequestBody body = new RegistrationRequestBody();
+                String jsonInput = new Gson().toJson(body);
+                try(OutputStream os = connection.getOutputStream()) {
+                    byte[] input = jsonInput.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+
+                connection.connect();
+
+                InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while((inputLine = reader.readLine()) != null){
+                    stringBuilder.append(inputLine);
+                }
+
+                //Close our InputStream and Buffered reader
+                reader.close();
+                streamReader.close();
+
+                //Set our result equal to our stringBuilder
+                result += stringBuilder.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+    }
+
+    // TODO: Set these values
+    class RegistrationRequestBody {
+        String FirstName;
+        String LastName;
+        String Occupation;
+        int StreetNumber;
+        String StreetName;
+        String City;
+        String State;
+        int ZipCode;
+
+        public RegistrationRequestBody() {
+            this.FirstName = "Default_FirstName";
+            this.LastName = "Default_LastName";
+            this.Occupation = "Default_Occupation";
+            this.StreetNumber = -1;
+            this.StreetName = "Default_StreetName";
+            this.City = "Default_City";
+            this.State = "Default_State";
+            this.ZipCode = -1;
+        }
     }
 }

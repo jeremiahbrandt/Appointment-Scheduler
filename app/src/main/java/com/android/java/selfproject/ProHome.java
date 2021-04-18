@@ -20,24 +20,38 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import Models.Professional;
+import util.ApiEndpointProvider;
 
 public class ProHome extends AppCompatActivity {
     private String token;
 
-    private TextView proName;
-    private TextView shareableCode;
+    private TextView firstName;
+    private TextView lastName;
     private TextView emailAddress;
     private TextView profession;
+    private TextView shareableCode;
+    private TextView streetName;
+    private TextView streetNumber;
+    private TextView city;
+    private TextView state;
+    private TextView zipCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pro_home);
 
-        proName = findViewById(R.id.pro_name);
+        firstName = findViewById(R.id.firstName);
+        lastName = findViewById(R.id.lastName);
         emailAddress = findViewById(R.id.pro_email);
         profession = findViewById(R.id.pro_profession);
         shareableCode = findViewById(R.id.shareable_code_ph);
+        streetName = findViewById(R.id.streetName);
+        streetNumber = findViewById(R.id.streetNumber);
+        city = findViewById(R.id.city);
+        state = findViewById(R.id.state);
+        zipCode = findViewById(R.id.zipCode);
+
 
 //        Settings Button initialization
         FloatingActionButton settings = findViewById(R.id.settings_button_ph);
@@ -61,7 +75,6 @@ public class ProHome extends AppCompatActivity {
     }
 
     public class ApiRequest extends AsyncTask<String, Void, String> {
-
         public static final String REQUEST_METHOD = "GET";
         public static final int READ_TIMEOUT = 15000;
         public static final int CONNECTION_TIMEOUT = 15000;
@@ -70,17 +83,18 @@ public class ProHome extends AppCompatActivity {
         public String doInBackground(String... params){
             String result = "";
 
-            String endpoint ="ProfessionalManagement";
+            String endpoint ="/professional";
             String inputLine;
             try {
-                String url = "http://10.0.2.2:7071/api/";
+               String url = ApiEndpointProvider.url;
+
                 HttpURLConnection connection = (HttpURLConnection) new URL(url + endpoint).openConnection();
 
                 connection.setRequestMethod(REQUEST_METHOD);
                 connection.setReadTimeout(READ_TIMEOUT);
                 connection.setConnectTimeout(CONNECTION_TIMEOUT);
 
-                connection.setRequestProperty("Authorization", token);
+                connection.setRequestProperty("Authorization", "Bearer " + token);
 
                 connection.connect();
 
@@ -112,10 +126,16 @@ public class ProHome extends AppCompatActivity {
                 Professional professional = new Professional(new JSONObject(s));
 
                 // Set UI values
-                proName.setText(professional.getAccount().getFirstName());
-                emailAddress.setText(professional.getAccount().getEmailAddress());
+                firstName.setText(professional.getFirstName());
+                lastName.setText(professional.getLastName());
+                emailAddress.setText(professional.getEmailAddress());
                 profession.setText(professional.getProfession());
                 shareableCode.setText(professional.getShareableCode());
+                streetNumber.setText(String.valueOf(professional.getStreetNumber()));
+                streetName.setText(professional.getStreetName());
+                city.setText(professional.getCity());
+                state.setText(professional.getState());
+                zipCode.setText(String.valueOf(professional.getZipCode()));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

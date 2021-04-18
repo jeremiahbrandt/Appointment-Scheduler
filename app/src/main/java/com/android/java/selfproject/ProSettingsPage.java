@@ -55,7 +55,7 @@ public class ProSettingsPage extends AppCompatActivity {
             FirebaseAuth.getInstance().getAccessToken(true).addOnCompleteListener(task -> {
                 token = task.getResult().getToken();
                 // Call our api
-                new GetRequest().execute();
+                new UpdateRequest().execute();
             });
         });
 

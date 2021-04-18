@@ -16,8 +16,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="100px"
         android:contentDescription="First Name"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="25sp" />
 
     <EditText
         android:id="@+id/pro_update_lastName"
@@ -25,8 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100px"
         android:contentDescription="Last Name"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="25sp" />
 
     <EditText
         android:id="@+id/pro_update_profession"
@@ -35,8 +33,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="100px"
         android:contentDescription="Profession"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="25sp" />
 
 
     <EditText
@@ -46,8 +43,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="100px"
         android:contentDescription="Street Name"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="25sp" />
 
     <EditText
         android:id="@+id/pro_update_streetNumber"
@@ -56,8 +52,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="100px"
         android:contentDescription="Street Number"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="25sp" />
 
     <EditText
         android:id="@+id/pro_update_city"
@@ -66,8 +61,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="100px"
         android:contentDescription="City"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="25sp" />
 
 
     <EditText
@@ -77,8 +71,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="100px"
         android:contentDescription="State"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="25sp" />
 
     <EditText
         android:id="@+id/pro_update_zipCode"
@@ -87,8 +80,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="100px"
         android:contentDescription="Zip Code"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="25sp" />
 
     <Button
         android:id="@+id/pro_update_button"

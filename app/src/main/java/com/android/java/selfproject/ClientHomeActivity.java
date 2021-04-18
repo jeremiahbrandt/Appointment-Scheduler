@@ -1,14 +1,10 @@
 package com.android.java.selfproject;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,13 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.auth.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,13 +21,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-import Models.Appointment;
 import Models.Client;
-import Models.Professional;
 import util.ApiEndpointProvider;
-
-import static java.security.AccessController.getContext;
 
 public class ClientHomeActivity extends AppCompatActivity {
     private String token;
@@ -47,6 +34,10 @@ public class ClientHomeActivity extends AppCompatActivity {
 
     private TextView firstName;
     private TextView lastName;
+    private ListView upcomingAppointments;
+
+    private ArrayAdapter<String> arrayAdapter;
+    private List<String> appointmentsList;
 
 //  Appointments added here
     String[] mobileList = {};
@@ -65,6 +56,11 @@ public class ClientHomeActivity extends AppCompatActivity {
         findProName = findViewById(R.id.find_pro_EditText);
         firstName = findViewById(R.id.firstName);
         lastName= findViewById(R.id.lastName);
+        upcomingAppointments = findViewById(R.id.client_list_view);
+
+        appointmentsList = new ArrayList();
+        arrayAdapter = new ArrayAdapter(this, R.layout.activity_listview, appointmentsList);
+        upcomingAppointments.setAdapter(arrayAdapter);
 
         findPro.setOnClickListener((v) -> {
             startActivity(new Intent(ClientHomeActivity.this, ProHomeClientView.class));
@@ -102,7 +98,6 @@ public class ClientHomeActivity extends AppCompatActivity {
                 connection.setRequestMethod(REQUEST_METHOD);
                 connection.setReadTimeout(READ_TIMEOUT);
                 connection.setConnectTimeout(CONNECTION_TIMEOUT);
-
                 connection.setRequestProperty("Authorization", "Bearer " + token);
 
                 connection.connect();
@@ -137,6 +132,8 @@ public class ClientHomeActivity extends AppCompatActivity {
                 // Set UI values
                 firstName.setText(client.getFirstName());
                 lastName.setText(client.getLastName());
+                appointmentsList.addAll(client.getAppointmentsStringList());
+                arrayAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

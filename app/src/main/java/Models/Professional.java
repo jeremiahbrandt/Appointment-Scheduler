@@ -18,7 +18,7 @@ public class Professional {
     private int zipCode;
     private String profession;
     private String shareableCode;
-    private Appointment[] appointments;
+    private ProfessionalAppointment[] appointments;
 
     // Create Professional from jObject
     public Professional(JSONObject jsonObject) {
@@ -35,9 +35,9 @@ public class Professional {
             this.shareableCode = jsonObject.getString("shareableCode");
 
             JSONArray appointments = jsonObject.getJSONArray("appointments");
-            this.appointments = new Appointment[appointments.length()];
+            this.appointments = new ProfessionalAppointment[appointments.length()];
             for(int i=0; i<appointments.length(); i++) {
-                this.appointments[i] = new Appointment(appointments.getJSONObject(i));
+                this.appointments[i] = new ProfessionalAppointment(appointments.getJSONObject(i));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -46,8 +46,8 @@ public class Professional {
 
     public List getAppointmentsStringList() {
         List<String> appointments = new ArrayList<>();
-        for(Appointment appointment: this.appointments) {
-            appointments.add(appointment.getStartTime() + "\t| " + appointment.getName() + "\t|" + appointment.getClientLastName() + ", " + appointment.getClientFirstName());
+        for(ProfessionalAppointment professionalAppointment : this.appointments) {
+            appointments.add(professionalAppointment.getStartTime() + "\t| " + professionalAppointment.getName() + "\t|" + professionalAppointment.getClientLastName() + ", " + professionalAppointment.getClientFirstName());
         }
         return appointments;
     }
@@ -92,7 +92,7 @@ public class Professional {
         return shareableCode;
     }
 
-    public Appointment[] getAppointments() {
+    public ProfessionalAppointment[] getAppointments() {
         return appointments;
     }
 }

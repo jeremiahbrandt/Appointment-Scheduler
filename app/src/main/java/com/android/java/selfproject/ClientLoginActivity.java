@@ -79,12 +79,11 @@ public class ClientLoginActivity extends AppCompatActivity {
                             BookingApi bookingApi = BookingApi.getInstance();
                             bookingApi.setUsername(snapshot.getString("username"));
                             bookingApi.setUserId(snapshot.getString("userId"));
-
-                            startActivity(new Intent(ClientLoginActivity.this, ClientHomeActivity.class));
                         }
                     }
-
                 });
+                startActivity(new Intent(ClientLoginActivity.this, ClientHomeActivity.class));
+                finish();
             }).addOnFailureListener(e -> progressBar.setVisibility(View.INVISIBLE));
         } else {
             progressBar.setVisibility(View.INVISIBLE);

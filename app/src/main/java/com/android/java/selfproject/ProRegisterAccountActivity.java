@@ -144,11 +144,8 @@ public class ProRegisterAccountActivity extends AppCompatActivity {
                             // Call our api
                             new ApiRequest().execute();
                         });
-
-                        Intent intent = new Intent(ProRegisterAccountActivity.this, ProLoginActivity.class);
-                        intent.putExtra("username", name);
-                        intent.putExtra("userId", currentUserId);
-                        startActivity(intent);
+                        startActivity(new Intent(ProRegisterAccountActivity.this, ProHome.class));
+                        finish();
                     } else {
                         progressBar.setVisibility(View.INVISIBLE);
                     }

@@ -47,7 +47,7 @@ public class Professional {
     public List getAppointmentsStringList() {
         List<String> appointments = new ArrayList<>();
         for(Appointment appointment: this.appointments) {
-            appointments.add(appointment.getStartTime() + "\t| " + appointment.getName() + "\t|" + appointment.getClientLastName() + ", " + appointment.getClientLastName());
+            appointments.add(appointment.getStartTime() + "\t| " + appointment.getName() + "\t|" + appointment.getClientLastName() + ", " + appointment.getClientFirstName());
         }
         return appointments;
     }

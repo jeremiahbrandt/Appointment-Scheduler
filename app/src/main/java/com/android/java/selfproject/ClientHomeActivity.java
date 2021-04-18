@@ -26,7 +26,6 @@ import com.google.firebase.firestore.auth.User;
 import static java.security.AccessController.getContext;
 
 public class ClientHomeActivity extends AppCompatActivity {
-
     EditText findProName;
 
 //  Appointments added here

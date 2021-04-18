@@ -10,28 +10,26 @@
     tools:context=".ProHomeClientView">
 
     <TextView
-        android:id="@+id/shareable_code_ph"
-        android:contentDescription="@string/shareable_code"
-        android:layout_width="wrap_content"
+        android:id="@+id/name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="175dp"
-        android:textSize="20sp" />
+        android:layout_marginTop="0dp"
+        android:contentDescription="last name, first name - occupation"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        />
 
     <TextView
-        android:id="@+id/pro_email"
-        android:contentDescription="@string/pro_email"
-        android:layout_width="wrap_content"
+        android:id="@+id/shareableCode"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="175dp"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/pro_profession"
-        android:contentDescription="@string/pro_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="175dp"
-        android:textSize="20sp" />
+        android:layout_marginTop="0dp"
+        android:contentDescription="shareable code"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/settings_button_ph"
@@ -43,80 +41,6 @@
         android:layout_gravity="end"
         android:src="@drawable/baseline_settings_white_18dp"
         android:contentDescription="@string/settings_button" />
-
-    <TextView
-        android:id="@+id/lastName"
-        android:layout_width="91dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-50dp"
-        android:contentDescription="Last Name"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/firstName"
-        android:layout_width="91dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-100dp"
-        android:contentDescription="First Name"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/streetName"
-        android:layout_width="91dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-100dp"
-        android:contentDescription="Street Name"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/streetNumber"
-        android:layout_width="91dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-100dp"
-        android:contentDescription="Street Number"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/city"
-        android:layout_width="91dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-100dp"
-        android:contentDescription="City"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-
-    <TextView
-        android:id="@+id/state"
-        android:layout_width="91dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-100dp"
-        android:contentDescription="State"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/zipCode"
-        android:layout_width="91dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-100dp"
-        android:contentDescription="Zip Code"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/pro_client_upcoming_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/upcoming_appointments"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
 
     <ListView
         android:id="@+id/pro_apt_list"

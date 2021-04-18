@@ -196,7 +196,7 @@ public class ProSettingsPage extends AppCompatActivity {
     private UpdateRequestBody createdUpdateRequestBody() {
         UpdateRequestBody requestBody = new UpdateRequestBody();
 
-        requestBody.FirstName = firstName.getText().toString() ?? "";
+        requestBody.FirstName = firstName.getText().toString();
         requestBody.LastName = lastName.getText().toString();
         requestBody.Occupation = profession.getText().toString();
         try {
@@ -210,7 +210,7 @@ public class ProSettingsPage extends AppCompatActivity {
         try {
             requestBody.ZipCode = Integer.parseInt(zipCode.getText().toString());
         } catch (Exception ex) {
-            continue;
+
         }
 
         return requestBody;

@@ -1,31 +1,44 @@
 package Models;
 
-import com.google.type.DateTime;
+import android.widget.ArrayAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 
+import util.ApiEndpointProvider;
+
 public class Appointment {
-    private String name;
-    private String description;
-    private String location;
-    private Account otherAccount;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private String name;
+    private String description;
+    private String clientFirstName;
+    private String clientLastName;
 
     public Appointment(JSONObject jsonObject) {
         try {
-            this.name = jsonObject.getString("name");
-            this.description = jsonObject.getString("description");
-            this.location = jsonObject.getString("location");
-            this.otherAccount = new Account(jsonObject.getJSONObject("account"));
-            this.startTime = LocalDateTime.parse(jsonObject.getString("startTime"));
-            this.endTime = LocalDateTime.parse(jsonObject.getString("endTime"));
+            String start = jsonObject.getString("startTime") + ", CST";
+            String end = jsonObject.getString("endTime") + ", CST";
+
+            this.startTime = LocalDateTime.parse(start, ApiEndpointProvider.format);
+            this.endTime = LocalDateTime.parse(end, ApiEndpointProvider.format);
+            this.name = jsonObject.getString("appointmentName");
+            this.description = jsonObject.getString("appointmentDescription");
+            this.clientFirstName = jsonObject.getString("clientFirstName");
+            this.clientLastName = jsonObject.getString("clientLastName");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
     public String getName() {
@@ -36,19 +49,11 @@ public class Appointment {
         return description;
     }
 
-    public String getLocation() {
-        return location;
+    public String getClientFirstName() {
+        return clientFirstName;
     }
 
-    public Account getOtherAccount() {
-        return otherAccount;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
+    public String getClientLastName() {
+        return clientLastName;
     }
 }

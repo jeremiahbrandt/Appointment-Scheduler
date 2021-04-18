@@ -17,7 +17,7 @@ public class Client {
             JSONArray appointments = jsonObject.getJSONArray("appointments");
             this.appointments = new Appointment[appointments.length()];
             for(int i=0; i<appointments.length(); i++) {
-                this.appointments[i] = new Appointment(appointments.getJSONObject(i));
+                // this.appointments[i] = new Appointment(appointments.getJSONObject(i));
             }
         } catch (JSONException e) {
             e.printStackTrace();

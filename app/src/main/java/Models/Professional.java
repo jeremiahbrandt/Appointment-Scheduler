@@ -4,6 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Professional {
     private String firstName;
     private String lastName;
@@ -39,6 +42,14 @@ public class Professional {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public List getAppointmentsStringList() {
+        List<String> appointments = new ArrayList<>();
+        for(Appointment appointment: this.appointments) {
+            appointments.add(appointment.getStartTime() + "\t| " + appointment.getName() + "\t|" + appointment.getClientLastName() + ", " + appointment.getClientLastName());
+        }
+        return appointments;
     }
 
     public String getFirstName() {

@@ -33,6 +33,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import Models.Appointment;
 import Models.Client;
 import Models.Professional;
 import util.ApiEndpointProvider;

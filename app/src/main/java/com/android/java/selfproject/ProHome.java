@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -18,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import Models.Professional;
 import util.ApiEndpointProvider;
@@ -35,6 +39,10 @@ public class ProHome extends AppCompatActivity {
     private TextView city;
     private TextView state;
     private TextView zipCode;
+    private ListView upcomingAppointments;
+
+    private ArrayAdapter<String> arrayAdapter;
+    private List<String> appointmentsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +59,11 @@ public class ProHome extends AppCompatActivity {
         city = findViewById(R.id.city);
         state = findViewById(R.id.state);
         zipCode = findViewById(R.id.zipCode);
+        upcomingAppointments = findViewById(R.id.pro_apt_list);
 
+        appointmentsList = new ArrayList();
+        arrayAdapter = new ArrayAdapter(this, R.layout.activity_listview, appointmentsList);
+        upcomingAppointments.setAdapter(arrayAdapter);
 
 //        Settings Button initialization
         FloatingActionButton settings = findViewById(R.id.settings_button_ph);
@@ -93,7 +105,6 @@ public class ProHome extends AppCompatActivity {
                 connection.setRequestMethod(REQUEST_METHOD);
                 connection.setReadTimeout(READ_TIMEOUT);
                 connection.setConnectTimeout(CONNECTION_TIMEOUT);
-
                 connection.setRequestProperty("Authorization", "Bearer " + token);
 
                 connection.connect();
@@ -136,6 +147,8 @@ public class ProHome extends AppCompatActivity {
                 city.setText(professional.getCity());
                 state.setText(professional.getState());
                 zipCode.setText(String.valueOf(professional.getZipCode()));
+                appointmentsList.addAll(professional.getAppointmentsStringList());
+                arrayAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

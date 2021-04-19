@@ -45,13 +45,14 @@ public class ClientHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_client_home);
 
         Button findPro = findViewById(R.id.find_pro_button);
-        findProName = findViewById(R.id.find_pro_EditText);
+//        findProName = findViewById(R.id.find_pro_EditText);
         name = findViewById(R.id.name);
         upcomingAppointments = findViewById(R.id.client_list_view);
 
         appointmentsList = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<>(this, R.layout.activity_listview, appointmentsList);
         upcomingAppointments.setAdapter(arrayAdapter);
+
 
         findPro.setOnClickListener((v) -> {
             EditText shareableCodeEditText = findViewById(R.id.find_pro_EditText);
@@ -128,7 +129,7 @@ public class ClientHomeActivity extends AppCompatActivity {
                 Client client = new Client(new JSONObject(s));
 
                 // Set UI values
-                name.setText(client.getFirstName() + " " + client.getLastName());
+                name.setText(client.getFirstName());
                 appointmentsList.addAll(client.getAppointmentsStringList());
                 arrayAdapter.notifyDataSetChanged();
             } catch (JSONException e) {

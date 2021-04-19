@@ -144,8 +144,10 @@ public class ProRegisterAccountActivity extends AppCompatActivity {
                             // Call our api
                             new ApiRequest().execute();
                         });
-                        startActivity(new Intent(ProRegisterAccountActivity.this, ProHome.class));
-                        finish();
+                        Intent intent = new Intent(ProRegisterAccountActivity.this, ProHome.class);
+//                        intent.putExtra(username, "username_key");
+                        intent.putExtra(email, "email_key");
+                        startActivity(intent);
                     } else {
                         progressBar.setVisibility(View.INVISIBLE);
                     }
@@ -228,7 +230,7 @@ public class ProRegisterAccountActivity extends AppCompatActivity {
         }
     }
 
-    private class RegistrationRequestBody {
+    private static class RegistrationRequestBody {
         private String FirstName;
         private String LastName;
         private String Occupation;

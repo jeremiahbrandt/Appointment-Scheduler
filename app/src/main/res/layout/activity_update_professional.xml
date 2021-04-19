@@ -14,26 +14,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="100px"
-        android:contentDescription="First Name"
-        android:textSize="25sp" />
+        android:layout_marginHorizontal="100dp"
+        android:textSize="25sp"
+        android:inputType="textPersonName"
+        android:importantForAutofill="no"
+        android:hint="@string/first_name_update_pro"/>
 
     <EditText
         android:id="@+id/pro_update_lastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="100px"
-        android:contentDescription="Last Name"
-        android:textSize="25sp" />
+        android:layout_marginHorizontal="100dp"
+        android:textSize="25sp"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:hint="@string/last_name_update_pro"/>
 
     <EditText
         android:id="@+id/pro_update_profession"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="100px"
-        android:contentDescription="Profession"
-        android:textSize="25sp" />
+        android:layout_marginHorizontal="100dp"
+        android:textSize="25sp"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:hint="@string/profession_update_pro"/>
+
+    <EditText
+        android:id="@+id/pro_update_streetNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:textSize="25sp"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:hint="@string/street_number_update_pro"/>
 
 
     <EditText
@@ -41,27 +56,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="100px"
-        android:contentDescription="Street Name"
-        android:textSize="25sp" />
-
-    <EditText
-        android:id="@+id/pro_update_streetNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="100px"
-        android:contentDescription="Street Number"
-        android:textSize="25sp" />
+        android:layout_marginHorizontal="100dp"
+        android:textSize="25sp"
+        android:importantForAutofill="no"
+        android:hint="@string/streetName_update_pro"
+        android:inputType="textPostalAddress" />
 
     <EditText
         android:id="@+id/pro_update_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="100px"
-        android:contentDescription="City"
-        android:textSize="25sp" />
+        android:layout_marginHorizontal="100dp"
+        android:textSize="25sp"
+        android:inputType="text"
+        android:importantForAutofill="no"
+        android:hint="@string/city_update_pro"/>
 
 
     <EditText
@@ -69,23 +79,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="100px"
-        android:contentDescription="State"
-        android:textSize="25sp" />
+        android:layout_marginHorizontal="100dp"
+        android:textSize="25sp"
+        android:inputType="text"
+        android:hint="@string/state_update_pro"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/pro_update_zipCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="100px"
-        android:contentDescription="Zip Code"
-        android:textSize="25sp" />
+        android:layout_marginHorizontal="100dp"
+        android:textSize="25sp"
+        android:inputType = "number"
+        android:hint="@string/zip_code_hint"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/pro_update_button"
         android:text="@string/save_button"
-        android:layout_marginTop="50dp"
         android:backgroundTint="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

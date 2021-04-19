@@ -10,50 +10,58 @@
     tools:context=".ProHomeClientView">
 
     <TextView
-        android:id="@+id/name"
-        android:layout_width="match_parent"
+        android:id="@+id/shareable_code_ph"
+        android:contentDescription="@string/shareable_code"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:contentDescription="last name, first name - occupation"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        />
+        android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/shareableCode"
-        android:layout_width="match_parent"
+        android:id="@+id/pro_email"
+        android:contentDescription="@string/pro_email"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:contentDescription="shareable code"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        />
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/pro_profession"
+        android:contentDescription="@string/pro_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/settings_button_ph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginEnd="5dp"
         android:backgroundTint="@color/white"
         android:layout_gravity="end"
         android:src="@drawable/baseline_settings_white_18dp"
         android:contentDescription="@string/settings_button" />
 
+
+    <TextView
+        android:id="@+id/pro_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/pro_client_upcoming_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/upcoming_appointments"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+
     <ListView
         android:id="@+id/pro_apt_list"
         android:layout_width="wrap_content"
         android:layout_height="400dp" />
-
-    <Button
-        android:id="@+id/pro_updateAccount_button"
-        android:text="Update"
-        android:backgroundTint="@color/black"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>

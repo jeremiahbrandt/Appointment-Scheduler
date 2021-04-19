@@ -19,7 +19,7 @@
     <string name="upcoming_appointments">Upcoming Appointments</string>
     <string name="find_professional">Find Professional</string>
     <string name="find_professional_button">Find Professional</string>
-    <string name="find_user_hint">Enter Professional Name</string>
+    <string name="find_user_hint">Enter Shareable Code</string>
     <string name="client_home_title">Client Home</string>
     <string name="professional_page_client_view">Professional Page Client View</string>
     <string name="pro_login_page_text">Professional Login Page</string>
@@ -46,5 +46,15 @@
     <string name="pro_info_description">last name, first name - occupation</string>
     <string name="calendar">Calendar</string>
     <string name="save_button">Save</string>
-    <string name="viewAcctInfoButton">View Account</string>
+    <string name="zip_code_update_pro">Zip Code</string>
+    <string name="zip_code_hint">Zip Code</string>
+    <string name="state_update_pro">State</string>
+    <string name="city_update_pro">City</string>
+    <string name="street_number_update_pro">Street Number</string>
+    <string name="address_update_pro">Address</string>
+    <string name="profession_update_pro">Profession</string>
+    <string name="last_name_update_pro">Last Name</string>
+    <string name="first_name_update_pro">First Name</string>
+    <string name="viewAcctInfoButton">Update Account</string>
+    <string name="streetName_update_pro">Street Name</string>
 </resources>

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Models.Client;
+import Models.Professional;
 import util.ApiEndpointProvider;
 
 public class ClientHomeActivity extends AppCompatActivity {
@@ -53,8 +54,15 @@ public class ClientHomeActivity extends AppCompatActivity {
         upcomingAppointments.setAdapter(arrayAdapter);
 
         findPro.setOnClickListener((v) -> {
-            startActivity(new Intent(ClientHomeActivity.this, ProHomeClientView.class));
-            finish();
+            EditText shareableCodeEditText = findViewById(R.id.find_pro_EditText);
+            String code = shareableCodeEditText.getText().toString();
+
+            if(code != null && code.length() == 6) {
+                Intent intent = new Intent(ClientHomeActivity.this, ProHomeClientView.class);
+                intent.putExtra("shareableCode", code);
+                startActivity(intent);
+                finish();
+            }
         });
 
         update();

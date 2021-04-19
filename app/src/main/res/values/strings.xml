@@ -17,6 +17,7 @@
     <string name="pro_login_page_textView">Professional Login Page</string>
     <string name="client_login_page_text">Client Login Page</string>
     <string name="upcoming_appointments">Upcoming Appointments</string>
+    <string name="open_time_slots">Open Time Slots</string>
     <string name="find_professional">Find Professional</string>
     <string name="find_professional_button">Find Professional</string>
     <string name="find_user_hint">Enter Professional Name</string>

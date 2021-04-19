@@ -14,17 +14,39 @@
         android:contentDescription="@string/favorite_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginEnd="5dp"
         android:backgroundTint="@color/white"
         android:layout_gravity="end"
         android:src="@drawable/baseline_favorite_white_18dp" />
 
     <TextView
+        android:id="@+id/client_pro_page_professionalName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="last name, first name - occupation"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/client_pro_page_professionalAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="Address"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        />
+
+    <TextView
         android:id="@+id/client_pro_page_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-225dp"
+        android:layout_marginTop="10dp"
         android:textSize="30sp"
         android:textStyle="bold"
         android:contentDescription="@string/professional_page_client_view"
@@ -32,7 +54,7 @@
 
     <TextView
         android:id="@+id/pro_client_upcoming_event"
-        android:text="@string/upcoming_appointments"
+        android:text="@string/open_time_slots"
         android:textSize="25sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"

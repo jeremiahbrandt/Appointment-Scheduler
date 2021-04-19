@@ -130,7 +130,10 @@ public class ClientRegisterAccountActivity extends AppCompatActivity {
                     // Save User to Firebase database
                     collectionReference.add(userObject).addOnSuccessListener(documentReference -> documentReference.get().addOnCompleteListener(task1 -> {
                         if(task1.getResult().exists()) {
-                            startActivity(new Intent(ClientRegisterAccountActivity.this, ClientHomeActivity.class));
+
+                            Intent intent = new Intent(ClientRegisterAccountActivity.this, ClientHomeActivity.class);
+                            intent.putExtra(firstName, "firstName_key");
+                            startActivity(intent);
                             finish();
                         }
                     })).addOnFailureListener(e -> Toast.makeText(ClientRegisterAccountActivity.this, "Failed to make account", Toast.LENGTH_SHORT).show());

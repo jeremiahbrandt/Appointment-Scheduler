@@ -20,6 +20,7 @@
         <activity android:name=".ClientLoginActivity" />
         <activity android:name=".SettingsPane"/>
         <activity android:name=".UpdateUser"/>
+        <activity android:name=".ProSettingsPage"/>
         <activity android:name=".MainActivity">
 
             <intent-filter>

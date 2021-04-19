@@ -46,7 +46,7 @@ public class SettingsPane extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SettingsPane.this, AccountInfoActivity.class));
+                startActivity(new Intent(SettingsPane.this, ProSettingsPage.class));
                 finish();
             }
         });

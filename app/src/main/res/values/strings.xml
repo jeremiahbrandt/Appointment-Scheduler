@@ -17,7 +17,6 @@
     <string name="pro_login_page_textView">Professional Login Page</string>
     <string name="client_login_page_text">Client Login Page</string>
     <string name="upcoming_appointments">Upcoming Appointments</string>
-    <string name="open_time_slots">Open Time Slots</string>
     <string name="find_professional">Find Professional</string>
     <string name="find_professional_button">Find Professional</string>
     <string name="find_user_hint">Enter Professional Name</string>
@@ -42,6 +41,8 @@
     <string name="password_update_user">Password</string>
     <string name="update_phone">Update Phone Number</string>
     <string name="phone_update_user">Phone</string>
-    <string name="update_button">Update</string>
-    <string name="save_button">Save</string>
+    <string name="open_time_slots">Available Times</string>
+    <string name="address">Address</string>
+    <string name="pro_info_description">last name, first name - occupation</string>
+    <string name="calendar">Calendar</string>
 </resources>

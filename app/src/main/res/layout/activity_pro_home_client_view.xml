@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,65 +12,59 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/favorite_button_phc"
-        android:contentDescription="@string/favorite_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="5dp"
-        android:backgroundTint="@color/white"
         android:layout_gravity="end"
-        android:src="@drawable/baseline_favorite_white_18dp" />
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/favorite_button"
+        android:src="@drawable/baseline_favorite_white_18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.071" />
 
     <TextView
         android:id="@+id/client_pro_page_professionalName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:contentDescription="last name, first name - occupation"
+        android:contentDescription="@string/pro_info_description"
+        android:gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:gravity="center"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/calendar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/client_pro_page_professionalAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="36dp"
         android:contentDescription="Address"
+        android:gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:gravity="center"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/calendar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/client_pro_page_professionalName"
+        app:layout_constraintVertical_bias="0.154" />
 
-    <TextView
-        android:id="@+id/client_pro_page_title"
+    <Button
+        android:id="@+id/calendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:contentDescription="@string/professional_page_client_view"
-        android:fontFamily="cursive"/>
-
-    <TextView
-        android:id="@+id/pro_client_upcoming_event"
-        android:text="@string/open_time_slots"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <CalendarView
-            android:id="@+id/pro_home_client_view_calendar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
-        </RelativeLayout>
+        android:layout_marginHorizontal="150dp"
+        android:backgroundTint="@color/black"
+        android:text="@string/calendar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

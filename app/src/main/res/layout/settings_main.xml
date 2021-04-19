@@ -29,14 +29,10 @@
 
     <Button
         android:textAllCaps="false"
-        android:id="@+id/nfcButton"
-        android:text="@string/nfc"
+        android:id="@+id/viewAcctInfo"
+        android:text="@string/viewAcctInfoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"/>
-
-
-
-
 
 </LinearLayout>

@@ -15,7 +15,7 @@ import android.widget.Button;
 public class SettingsPane extends AppCompatActivity {
 
     private static final String TAG = "";
-    Button internet, volume, nfc, DeleteUser;
+    Button internet, volume, viewAcctInfo, DeleteUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class SettingsPane extends AppCompatActivity {
 
         internet= findViewById(R.id.internetButton);
         volume = findViewById(R.id.volumeButton);
-        nfc= findViewById(R.id.nfcButton);
+        viewAcctInfo = findViewById(R.id.viewAcctInfo);
 
         internet.setOnClickListener(new View.OnClickListener(){
             @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -42,11 +42,12 @@ public class SettingsPane extends AppCompatActivity {
                 startActivity(new Intent(Settings.Panel.ACTION_VOLUME));
             }
         });
-        nfc.setOnClickListener(new View.OnClickListener() {
+        viewAcctInfo.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Settings.Panel.ACTION_NFC));
+                startActivity(new Intent(SettingsPane.this, AccountInfoActivity.class));
+                finish();
             }
         });
     }

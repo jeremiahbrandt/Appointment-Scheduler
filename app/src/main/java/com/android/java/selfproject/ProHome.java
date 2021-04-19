@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,8 +29,16 @@ import util.ApiEndpointProvider;
 public class ProHome extends AppCompatActivity {
     private String token;
 
-    private TextView name;
+    private TextView firstName;
+    private TextView lastName;
+    private TextView emailAddress;
+    private TextView profession;
     private TextView shareableCode;
+    private TextView streetName;
+    private TextView streetNumber;
+    private TextView city;
+    private TextView state;
+    private TextView zipCode;
     private ListView upcomingAppointments;
 
     private ArrayAdapter<String> arrayAdapter;
@@ -42,8 +49,16 @@ public class ProHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pro_home);
 
-        name = findViewById(R.id.name);
-        shareableCode = findViewById(R.id.shareableCode);
+        firstName = findViewById(R.id.firstName);
+        lastName = findViewById(R.id.lastName);
+        emailAddress = findViewById(R.id.pro_email);
+        profession = findViewById(R.id.pro_profession);
+        shareableCode = findViewById(R.id.shareable_code_ph);
+        streetName = findViewById(R.id.streetName);
+        streetNumber = findViewById(R.id.streetNumber);
+        city = findViewById(R.id.city);
+        state = findViewById(R.id.state);
+        zipCode = findViewById(R.id.zipCode);
         upcomingAppointments = findViewById(R.id.pro_apt_list);
 
         appointmentsList = new ArrayList();
@@ -55,11 +70,6 @@ public class ProHome extends AppCompatActivity {
 
         settings.setOnClickListener((v) -> {
             startActivity(new Intent(ProHome.this, SettingsPane.class));
-            finish();
-        });
-
-        findViewById(R.id.pro_updateAccount_button).setOnClickListener(v -> {
-            startActivity(new Intent(ProHome.this, ProSettingsPage.class));
             finish();
         });
 
@@ -76,7 +86,7 @@ public class ProHome extends AppCompatActivity {
         });
     }
 
-    private class ApiRequest extends AsyncTask<String, Void, String> {
+    public class ApiRequest extends AsyncTask<String, Void, String> {
         public static final String REQUEST_METHOD = "GET";
         public static final int READ_TIMEOUT = 15000;
         public static final int CONNECTION_TIMEOUT = 15000;
@@ -127,8 +137,16 @@ public class ProHome extends AppCompatActivity {
                 Professional professional = new Professional(new JSONObject(s));
 
                 // Set UI values
-                name.setText(professional.getLastName() + ", " + professional.getFirstName() + " - " + professional.getProfession());
+                firstName.setText(professional.getFirstName());
+                lastName.setText(professional.getLastName());
+                emailAddress.setText(professional.getEmailAddress());
+                profession.setText(professional.getProfession());
                 shareableCode.setText(professional.getShareableCode());
+                streetNumber.setText(String.valueOf(professional.getStreetNumber()));
+                streetName.setText(professional.getStreetName());
+                city.setText(professional.getCity());
+                state.setText(professional.getState());
+                zipCode.setText(String.valueOf(professional.getZipCode()));
                 appointmentsList.addAll(professional.getAppointmentsStringList());
                 arrayAdapter.notifyDataSetChanged();
             } catch (JSONException e) {

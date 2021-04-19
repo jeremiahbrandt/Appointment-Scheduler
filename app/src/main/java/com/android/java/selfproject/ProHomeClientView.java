@@ -2,10 +2,14 @@ package com.android.java.selfproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -30,6 +34,7 @@ public class ProHomeClientView extends AppCompatActivity {
 
     private TextView professionalName;
     private TextView professionalAddress;
+    private Button calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,7 @@ public class ProHomeClientView extends AppCompatActivity {
 
         professionalName = findViewById(R.id.client_pro_page_professionalName);
         professionalAddress = findViewById(R.id.client_pro_page_professionalAddress);
+        calendar = findViewById(R.id.calendar);
 
         String shareableCode = (String)getIntent().getSerializableExtra("shareableCode");
         // Get token
@@ -45,6 +51,20 @@ public class ProHomeClientView extends AppCompatActivity {
             token = task.getResult().getToken();
             // Call our api
             new LookupProfessionalRequest().execute(shareableCode);
+        });
+
+        calendar.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_INSERT);
+            intent.setData(CalendarContract.Events.CONTENT_URI);
+            intent.putExtra(CalendarContract.Events.TITLE, professionalName.getText().toString());
+            intent.putExtra(CalendarContract.Events.EVENT_LOCATION, professionalAddress.getText().toString());
+            intent.putExtra(CalendarContract.Events.ALL_DAY, false);
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }else {
+                Toast.makeText(ProHomeClientView.this, "Download Google Calendar", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

@@ -29,16 +29,8 @@ import util.ApiEndpointProvider;
 public class ProHome extends AppCompatActivity {
     private String token;
 
-    private TextView firstName;
-    private TextView lastName;
-    private TextView emailAddress;
-    private TextView profession;
+    private TextView name;
     private TextView shareableCode;
-    private TextView streetName;
-    private TextView streetNumber;
-    private TextView city;
-    private TextView state;
-    private TextView zipCode;
     private ListView upcomingAppointments;
 
     private ArrayAdapter<String> arrayAdapter;
@@ -49,16 +41,8 @@ public class ProHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pro_home);
 
-        firstName = findViewById(R.id.firstName);
-        lastName = findViewById(R.id.lastName);
-        emailAddress = findViewById(R.id.pro_email);
-        profession = findViewById(R.id.pro_profession);
-        shareableCode = findViewById(R.id.shareable_code_ph);
-        streetName = findViewById(R.id.streetName);
-        streetNumber = findViewById(R.id.streetNumber);
-        city = findViewById(R.id.city);
-        state = findViewById(R.id.state);
-        zipCode = findViewById(R.id.zipCode);
+        name = findViewById(R.id.name);
+        shareableCode = findViewById(R.id.shareableCode);
         upcomingAppointments = findViewById(R.id.pro_apt_list);
 
         appointmentsList = new ArrayList();
@@ -73,9 +57,13 @@ public class ProHome extends AppCompatActivity {
             finish();
         });
 
+        findViewById(R.id.pro_updateAccount_button).setOnClickListener(v -> {
+            startActivity(new Intent(ProHome.this, ProSettingsPage.class));
+            finish();
+        });
+
         updateProfessional();
     }
-
 
     private void updateProfessional() {
         // Get token
@@ -86,7 +74,7 @@ public class ProHome extends AppCompatActivity {
         });
     }
 
-    public class ApiRequest extends AsyncTask<String, Void, String> {
+    private class ApiRequest extends AsyncTask<String, Void, String> {
         public static final String REQUEST_METHOD = "GET";
         public static final int READ_TIMEOUT = 15000;
         public static final int CONNECTION_TIMEOUT = 15000;
@@ -98,7 +86,7 @@ public class ProHome extends AppCompatActivity {
             String endpoint ="/professional";
             String inputLine;
             try {
-               String url = ApiEndpointProvider.url;
+                String url = ApiEndpointProvider.url;
 
                 HttpURLConnection connection = (HttpURLConnection) new URL(url + endpoint).openConnection();
 
@@ -137,16 +125,8 @@ public class ProHome extends AppCompatActivity {
                 Professional professional = new Professional(new JSONObject(s));
 
                 // Set UI values
-                firstName.setText(professional.getFirstName());
-                lastName.setText(professional.getLastName());
-                emailAddress.setText(professional.getEmailAddress());
-                profession.setText(professional.getProfession());
+                name.setText(professional.getLastName() + ", " + professional.getFirstName() + " - " + professional.getProfession());
                 shareableCode.setText(professional.getShareableCode());
-                streetNumber.setText(String.valueOf(professional.getStreetNumber()));
-                streetName.setText(professional.getStreetName());
-                city.setText(professional.getCity());
-                state.setText(professional.getState());
-                zipCode.setText(String.valueOf(professional.getZipCode()));
                 appointmentsList.addAll(professional.getAppointmentsStringList());
                 arrayAdapter.notifyDataSetChanged();
             } catch (JSONException e) {

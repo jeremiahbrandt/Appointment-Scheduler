@@ -45,4 +45,6 @@
     <string name="address">Address</string>
     <string name="pro_info_description">last name, first name - occupation</string>
     <string name="calendar">Calendar</string>
+    <string name="save_button">Save</string>
+    <string name="viewAcctInfoButton">View Account</string>
 </resources>

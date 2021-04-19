@@ -60,11 +60,12 @@ public class ProHomeClientView extends AppCompatActivity {
             intent.putExtra(CalendarContract.Events.EVENT_LOCATION, professionalAddress.getText().toString());
             intent.putExtra(CalendarContract.Events.ALL_DAY, false);
 
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivity(intent);
-            }else {
+            startActivity(intent);
+
+           /* if (intent.resolveActivity(getPackageManager()) != null) {
+            } else {
                 Toast.makeText(ProHomeClientView.this, "Download Google Calendar", Toast.LENGTH_SHORT).show();
-            }
+            }*/
         });
     }
 

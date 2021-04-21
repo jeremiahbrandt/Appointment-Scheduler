@@ -57,4 +57,5 @@
     <string name="first_name_update_pro">First Name</string>
     <string name="viewAcctInfoButton">Update Account</string>
     <string name="streetName_update_pro">Street Name</string>
+    <string name="logout">Logout</string>
 </resources>

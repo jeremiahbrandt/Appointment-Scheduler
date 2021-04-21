@@ -122,5 +122,6 @@ public class MainActivity extends AppCompatActivity {
         if (firebaseAuth != null) {
             firebaseAuth.removeAuthStateListener(authStateListener);
         }
+
     }
 }

@@ -1,5 +1,5 @@
 # Description
-This repository is part of a group project I contributed to in Software Engineering (SE 3910). It is the API backend for an Android appointment scheduling application.
+This repository is part of a group project I contributed to in Software Engineering (SE 3910). It is an Android application used to schedule appointments with registered professionals.
 
 # Related Repositories
 - [Android Application](https://github.com/jeremiahbrandt/Appointment-Scheduler-Android-App)
